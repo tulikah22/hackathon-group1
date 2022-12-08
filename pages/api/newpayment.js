@@ -11,8 +11,9 @@ export default function handler(req, res) {
         // console.log('Vendor', vendor);
         // if (Object.values(vendors).includes(vendor)) {
           if (typeof window !== "undefined") {
-            localStorage.setItem("data", JSON.stringify(result.data));
-            console.log(localStorage.setItem("data", JSON.stringify(result.data)));
+
+            localStorage.setItem('result', JSON.stringify(result));
+            console.log(`localStorage.result: ${localStorage.getItem('result')}`)
           }
         // } else {
         // }
