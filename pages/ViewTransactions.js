@@ -16,16 +16,16 @@ export default function ViewTransactions() {
     let response;
     let rows;
     if (typeof window !== "undefined") {
-        response =  JSON.parse(localStorage.getItem("data" || "[]"));
+        response =  JSON.parse(localStorage.getItem("data"));
     }
 
-   for(let txn in Object.values(response)) {
-    let info = response[txn];
+//    for(let txn in Object.values(response)) {
+//     let info = response[txn];
     rows = [
-        createData('Wellness Fund', info.vendor, '100USDC', '0x456', '0x973847', '75USDC', '925USDC', '11/11/2022'),
+        createData('Wellness Fund', 'info.vendor', '100USDC', '0x456', '0x973847', '75USDC', '925USDC', '11/11/2022'),
       
       ];
-   }
+//    }
 
     return (
         <TableContainer component={Paper} style={{width:'80%', margin:'0 auto'}}>
