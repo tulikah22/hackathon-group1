@@ -11,14 +11,25 @@ function createData(type, vendor, payAmount, payTxHash, reTxHash, reTxAmount, re
   return { type, vendor, payAmount, payTxHash, reTxHash, reTxAmount, remainderAllowance, reDate };
 }
 
-const rows = [
-  createData('Wellness Fund', 'Equinox', '100USDC', '0x456', '0x973847', '75USDC', '925USDC', '11/11/2022'),
 
-];
 export default function ViewTransactions() {
+    let response;
+    let rows;
+    if (typeof window !== "undefined") {
+        response =  JSON.parse(localStorage.getItem("data" || "[]"));
+    }
+
+   for(let txn in Object.values(response)) {
+    let info = response[txn];
+    rows = [
+        createData('Wellness Fund', info.vendor, '100USDC', '0x456', '0x973847', '75USDC', '925USDC', '11/11/2022'),
+      
+      ];
+   }
+
     return (
-        <TableContainer component={Paper} style={{width:'60%', margin:'0 auto'}}>
-          <Table sx={{ minWidth: 450 }} aria-label="simple table">
+        <TableContainer component={Paper} style={{width:'80%', margin:'0 auto'}}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell>Expense Type</TableCell>

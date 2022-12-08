@@ -1,4 +1,4 @@
-import { Router, SystemSecurityUpdate } from "@mui/icons-material";
+import vendors from "./utils/vendorsList";
 import {
   Select,
   FormControl,
@@ -7,20 +7,21 @@ import {
   Box,
   InputLabel,
 } from "@mui/material";
-import React from 'react'
-import { useRouter } from 'next/router'
+import React from "react";
+import { useRouter } from "next/router";
+import Alert from "@mui/material/Alert";
 
 export default function SetUpExpense() {
   const router = useRouter();
-  const [type, setType] = React.useState('');
-  const [vendor, setVendor] = React.useState('');
+  const [type, setType] = React.useState("");
+  const [vendor, setVendor] = React.useState("");
 
   const handleChangeType = (event) => {
     setType(event.target.value);
   };
 
   const handleChangeVendor = (event) => {
-      setVendor(event.target.value);
+    setVendor(event.target.value);
   };
 
   const handleSubmit = async (event) => {
@@ -29,29 +30,40 @@ export default function SetUpExpense() {
     const data = {
       walletAdd: event.target.walletadd.value,
       purchasetype: type,
-      vendor:  vendor,
-      chargeCode:  event.target.code.value
+      vendor: vendor,
+      chargeCode: event.target.code.value,
     };
 
     // Send the data to the server in JSON format.
     const JSONdata = JSON.stringify(data);
     alert(JSONdata);
-    const endpoint = '/api/newpayment'
+    const endpoint = "/api/newpayment";
     const options = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSONdata,
-    }
+    };
 
     //API endpoint where we send form data.
     const response = await fetch(endpoint, options);
-    let res = await response.json()
-      console.log('Response from api--->', res);
-      if (res.data !== undefined) router.push('./ViewTransactions');
-      else 
-        console.log(res)
+    let res = await response.json();
+    let totalTransactions = [];
+    console.log("Response from api--->", res);
+    if (res.data !== undefined) {
+      let vendor = res.data.vendor;
+      if (Object.values(vendors).includes(vendor)) {
+        if (typeof window !== "undefined") {
+          totalTransactions.push(res.data);
+          localStorage.setItem("data", JSON.stringify(totalTransactions));
+        }
+        router.push("./ViewTransactions");
+      } else {
+      }
+    } else {
+      console.log(res);
+    }
   };
   return (
     <form onSubmit={handleSubmit}>
@@ -79,13 +91,13 @@ export default function SetUpExpense() {
                 label="Select type of purchase"
                 onChange={handleChangeType}
               >
-                <MenuItem value={'type1'}>Type1</MenuItem>
-                <MenuItem value={'type1'}>Type2</MenuItem>
-                <MenuItem value={'type1'}>Type3</MenuItem>
+                <MenuItem value={"type1"}>Type1</MenuItem>
+                <MenuItem value={"type1"}>Type2</MenuItem>
+                <MenuItem value={"type1"}>Type3</MenuItem>
               </Select>
             </FormControl>
           </Box>
-          </Grid>
+        </Grid>
         <Grid item md={8}>
           <label htmlFor="walletadd">Your wallet address</label>
           <input type="text" id="walletadd" name="walletadd" required />
@@ -102,9 +114,9 @@ export default function SetUpExpense() {
               label="Vendors"
               onChange={handleChangeVendor}
             >
-              <MenuItem value={1}>LA Fitness</MenuItem>
-              <MenuItem value={2}>Planet Fitness</MenuItem>
-              <MenuItem value={3}>Equinox</MenuItem>
+              <MenuItem value={vendors.LaFitness}>LA Fitness</MenuItem>
+              <MenuItem value={vendors.PlanetFitness}>Planet Fitness</MenuItem>
+              <MenuItem value={vendors.Equinox}>Equinox</MenuItem>
             </Select>
           </FormControl>
         </Grid>
