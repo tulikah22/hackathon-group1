@@ -19,13 +19,11 @@ export default function ViewTransactions() {
         response =  JSON.parse(localStorage.getItem("data"));
     }
 
-//    for(let txn in Object.values(response)) {
-//     let info = response[txn];
+    console.log(response);
     rows = [
-        createData('Wellness Fund', 'info.vendor', '100USDC', '0x456', '0x973847', '75USDC', '925USDC', '11/11/2022'),
+        createData('Wellness Fund', 'vendor', '100USDC', 'response.data.txs[0].toAddress', '0x973847', '75USDC', '925USDC', '11/11/2022'),
       
       ];
-//    }
 
     return (
         <TableContainer component={Paper} style={{width:'80%', margin:'0 auto'}}>

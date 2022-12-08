@@ -38,32 +38,32 @@ export default function SetUpExpense() {
     const JSONdata = JSON.stringify(data);
     alert(JSONdata);
     const endpoint = "/api/newpayment";
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSONdata,
-    };
+    // const options = {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSONdata,
+    // };
 
     //API endpoint where we send form data.
-    const response = await fetch(endpoint, options);
-    let res = await response.json();
-    let totalTransactions = [];
-    console.log("Response from api--->", res);
-    if (res.data !== undefined) {
-      let vendor = res.data.vendor;
-      if (Object.values(vendors).includes(vendor)) {
-        if (typeof window !== "undefined") {
-          totalTransactions.push(res.data);
-          localStorage.setItem("data", JSON.stringify(totalTransactions));
-        }
-        router.push("./ViewTransactions");
-      } else {
-      }
-    } else {
-      console.log(res);
-    }
+    // const response = await fetch(endpoint, options);
+    // let res = await response.json();
+
+    // console.log("Response from api--->", res);
+    // if (res.data !== undefined) {
+    //   let vendor = res.data.vendor;
+    //   if (Object.values(vendors).includes(vendor)) {
+    //     if (typeof window !== "undefined") {
+    //       totalTransactions.push(res.data);
+    //       localStorage.setItem("data", JSON.stringify(totalTransactions));
+    //     }
+    //     router.push("./ViewTransactions");
+    //   } else {
+    //   }
+    // } else {
+    //   console.log(res);
+    // }
   };
   return (
     <form onSubmit={handleSubmit}>
