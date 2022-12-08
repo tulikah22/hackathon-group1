@@ -91,9 +91,9 @@ export default function SetUpExpense() {
                 label="Select type of purchase"
                 onChange={handleChangeType}
               >
-                <MenuItem value={"type1"}>Type1</MenuItem>
-                <MenuItem value={"type1"}>Type2</MenuItem>
-                <MenuItem value={"type1"}>Type3</MenuItem>
+                <MenuItem value={"type1"}>Wellness Fund</MenuItem>
+                <MenuItem value={"type1"}>Phone</MenuItem>
+                <MenuItem value={"type1"}>Internet</MenuItem>
               </Select>
             </FormControl>
           </Box>
