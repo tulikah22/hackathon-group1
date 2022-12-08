@@ -20,37 +20,38 @@ export default function SetUpExpense() {
   };
 
   const handleChangeVendor = (event) => {
-    if(event.target.value === 4) router.push('./AddVendor');
-    else
       setVendor(event.target.value);
   };
 
   const handleSubmit = async (event) => {
+    event.preventDefault();
+
     const data = {
       walletAdd: event.target.walletadd.value,
+      purchasetype: type,
+      vendor:  vendor,
+      chargeCode:  event.target.code.value
     };
 
     // Send the data to the server in JSON format.
     const JSONdata = JSON.stringify(data);
-
     alert(JSONdata);
-    // API endpoint where we send form data.
-    // const endpoint = '/api/form'
-
-    // Form the request for sending data to the server.
+    const endpoint = '/api/newpayment'
     const options = {
-      // The method is POST because we are sending data.
-      method: "POST",
-      // Tell the server we're sending JSON.
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-      // Body of the request is the JSON data we created above.
       body: JSONdata,
-    };
+    }
 
-    // Send the form data to our forms API on Vercel and get a response.
-    // const response = await fetch(endpoint, options)
+    //API endpoint where we send form data.
+    const response = await fetch(endpoint, options);
+    let res = await response.json()
+      console.log('Response from api--->', res);
+      if (res.data !== undefined) router.push('./ViewTransactions');
+      else 
+        console.log(res)
   };
   return (
     <form onSubmit={handleSubmit}>
@@ -86,7 +87,7 @@ export default function SetUpExpense() {
           </Box>
           </Grid>
         <Grid item md={8}>
-          <label htmlFor="walletAddress">Your wallet address</label>
+          <label htmlFor="walletadd">Your wallet address</label>
           <input type="text" id="walletadd" name="walletadd" required />
         </Grid>
         {/* <label htmlFor="vendor">Select your vendor</label>
@@ -104,7 +105,6 @@ export default function SetUpExpense() {
               <MenuItem value={1}>LA Fitness</MenuItem>
               <MenuItem value={2}>Planet Fitness</MenuItem>
               <MenuItem value={3}>Equinox</MenuItem>
-              <MenuItem value={4}>Add a new vendor</MenuItem>
             </Select>
           </FormControl>
         </Grid>
