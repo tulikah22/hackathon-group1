@@ -35,9 +35,9 @@ export default function SetUpExpense() {
     };
 
     // Send the data to the server in JSON format.
-    const JSONdata = JSON.stringify(data);
-    alert(JSONdata);
-    const endpoint = "/api/newpayment";
+    // const JSONdata = JSON.stringify(data);
+    // alert(JSONdata);
+    // const endpoint = "/api/newpayment";
     // const options = {
     //   method: "POST",
     //   headers: {
